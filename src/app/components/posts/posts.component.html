@@ -1,0 +1,70 @@
+<h1 class="text-center">Posts</h1>
+<button type="button" (click)="clickAddPost()" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Create Post
+</button>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">title</th>
+        <th scope="col">body</th>
+        <th scope="col">User Id</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let post of posts">
+        <th scope="row">{{post.id}}</th>
+        <td>{{post.title}}</td>
+        <td>{{post.author}}</td>
+        <td>
+            <a class="btn btn-primary" [routerLink]="['/posts', post.id]">Detail</a>
+            <a style="margin-left: 5px;" class="btn btn-danger" (click)="deletePost(post)">delete</a>
+            <button 
+            style="margin-left: 5px;" 
+            type="button" 
+            class="btn btn-warning" 
+            data-bs-toggle="modal" 
+            data-bs-target="#exampleModal"
+            (click)="onEdit(post)">Edit</button>
+          </td>
+      </tr>
+
+    </tbody>
+</table>
+
+<!-- Modal for POST -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Post Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <!---Form-->
+      <div class="modal-body">
+        <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+         
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" formControlName="title">
+          </div>
+          
+          <div class="mb-3">
+            <label for="body" class="form-label">Author</label>
+            <input type="text" class="form-control" id="author" formControlName="author">
+          </div>
+
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" *ngIf="showAdd" class="btn btn-primary" (click)="postPostDetails()">Add</button>
+        <button type="button" *ngIf="showUpdate" class="btn btn-primary" (click)="updatePostDetails()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

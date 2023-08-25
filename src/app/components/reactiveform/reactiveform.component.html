@@ -1,0 +1,125 @@
+<h1 style="text-align: center;">Registration form</h1>
+
+
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="email">
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      <div *ngIf="
+      registrationForm.get('email')?.invalid &&
+      (registrationForm.get('email')?.dirty ||
+      registrationForm.get('email')?.touched)">
+        <div *ngIf="email?.errors?.['required']" class="text-danger">
+          Email is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3 row" formGroupName="address">
+      <div class="col">
+        <label for="addressLine" class="form-label">Address Line: </label>
+        <input type="text" class="form-control" id="addressLine" formControlName="addressLine">
+        <div *ngIf="
+          registrationForm.get('address.addressLine')?.invalid &&
+          (registrationForm.get('address.addressLine')?.dirty ||
+          registrationForm.get('address.addressLine')?.touched)">
+          <div *ngIf="registrationForm?.get('address.addressLine')?.errors?.['required']" class="text-danger">
+            required field.
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <label for="city" class="form-label">City: </label>
+        <input type="text" class="form-control" id="city" formControlName="city">
+        <div *ngIf="
+          registrationForm.get('address.city')?.invalid &&
+          (registrationForm.get('address.city')?.dirty ||
+          registrationForm.get('address.city')?.touched)">
+          <div *ngIf="registrationForm?.get('address.city')?.errors?.['required']" class="text-danger">
+            required field.
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <label for="state" class="form-label">State: </label>
+        <input type="text" class="form-control" id="state" formControlName="state">
+        <div *ngIf="
+          registrationForm.get('address.state')?.invalid &&
+          (registrationForm.get('address.state')?.dirty ||
+          registrationForm.get('address.state')?.touched)">
+          <div *ngIf="registrationForm?.get('address.state')?.errors?.['required']" class="text-danger">
+            required field.
+          </div>
+          <div *ngIf="registrationForm?.get('address.state')?.errors?.['pattern']" class="text-danger">
+            State should not include number.
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <label for="zipCode" class="form-label">Zip: </label>
+        <input type="text" class="form-control" id="zipCode" formControlName="zipCode">
+        <div *ngIf="
+          registrationForm.get('address.zipCode')?.invalid &&
+          (registrationForm.get('address.zipCode')?.dirty ||
+          registrationForm.get('address.zipCode')?.touched)">
+          <div *ngIf="registrationForm?.get('address.zipCode')?.errors?.['required']" class="text-danger">
+            required field.
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <div class="mb-3">
+        <label for="exampleInputUserName1" class="form-label">User Name</label>
+        <input type="text" class="form-control" id="exampleInputUserName1" aria-describedby="emailHelp" formControlName="username">
+        <div *ngIf="
+          registrationForm.get('username')?.invalid && 
+          (registrationForm.get('username')?.dirty || 
+          registrationForm.get('username')?.touched)">
+            <div *ngIf="username?.errors?.['required']" class="text-danger">
+              User Name is required.
+            </div>
+            <div *ngIf="username?.errors?.['pattern']" class="text-danger">
+              User Name not include number.
+            </div>
+        </div>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" formControlName="password">
+      <div *ngIf="
+      registrationForm.get('password')?.invalid && 
+      (registrationForm.get('password')?.dirty || 
+      registrationForm.get('password')?.touched)">
+        <div *ngIf="password?.errors?.['required']" class="text-danger">
+          Password is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3" formArrayName="skills">
+      <label for="skills" class="form-label">Skills: </label>
+      <div *ngFor="let skill of skills.controls; index as i">
+        <input placeholder="Your skill..." type="text" class="form-control mt-2" id="skills" formControlName="{{i}}">
+        <div *ngIf="
+        registrationForm.get('skills')?.invalid && 
+        (registrationForm.get('skills')?.dirty || 
+        registrationForm.get('skills')?.touched)">
+          <div *ngIf="skills.controls[i].errors?.['required']" class="text-danger">
+            Skills is required.
+          </div>
+        </div>
+      </div>
+      
+     
+      <button class="btn btn-outline-primary mt-3" (click)="addSkills()">+ Add Skills</button>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
